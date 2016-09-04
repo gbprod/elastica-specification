@@ -3,6 +3,7 @@
     "description": "This library allows you to create Elastica queries using the Specification pattern",
     "type": "library",
     "require": {
+        "php": ">=5.6",
         "gbprod/specification": "^0.1",
         "ruflin/elastica": "^3.2"
     },
