@@ -1,6 +1,6 @@
 <?php
 
-namespace GBProd\ElasticaSpecification\ExpressionBuilder;
+namespace GBProd\ElasticaSpecification\QueryFactory;
 
 use Elastica\QueryBuilder;
 use GBProd\ElasticaSpecification\Registry;
@@ -8,11 +8,11 @@ use GBProd\Specification\AndX;
 use GBProd\Specification\Specification;
 
 /**
- * Expression Builder for AndX specification
+ * Factory for AndX specification
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class AndXBuilder implements Builder
+class AndXFactory implements Factory
 {
     /**
      * @var Registry
@@ -30,18 +30,18 @@ class AndXBuilder implements Builder
     /**
      * {inheritdoc}
      */
-    public function build(Specification $spec, QueryBuilder $qb)
+    public function create(Specification $spec, QueryBuilder $qb)
     {
         if (!$spec instanceof AndX) {
             throw new \InvalidArgumentException();
         }
 
-        $firstPartBuilder  = $this->registry->getBuilder($spec->getFirstPart());
-        $secondPartBuilder = $this->registry->getBuilder($spec->getFirstPart());
+        $firstPartFactory  = $this->registry->getFactory($spec->getFirstPart());
+        $secondPartFactory = $this->registry->getFactory($spec->getFirstPart());
 
         return $qb->query()->bool()
-            ->addMust($firstPartBuilder->build($spec->getFirstPart(), $qb))
-            ->addMust($secondPartBuilder->build($spec->getSecondPart(), $qb))
+            ->addMust($firstPartFactory->create($spec->getFirstPart(), $qb))
+            ->addMust($secondPartFactory->create($spec->getSecondPart(), $qb))
         ;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Tests\GBProd\ElasticaSpecification;
 
-use GBProd\ElasticaSpecification\ExpressionBuilder\Builder;
+use GBProd\ElasticaSpecification\QueryFactory\Factory;
 use GBProd\ElasticaSpecification\Registry;
 use GBProd\Specification\Specification;
 
@@ -25,26 +25,26 @@ class RegistryTest extends \PHPUnit_Framework_TestCase implements Specification
         return true;
     }
 
-    public function testGetBuilderThrowsOutOfRangeExceptionIfBuilderNotRegistred()
+    public function testgetFactoryThrowsOutOfRangeExceptionIfFactoryNotRegistred()
     {
         $registry = new Registry();
 
         $this->expectException(\OutOfRangeException::class);
 
-        $registry->getBuilder($this);
+        $registry->getFactory($this);
     }
 
-    public function testGetBuilderReturnsAssociatedBuilder()
+    public function testgetFactoryReturnsAssociatedFactory()
     {
         $registry = new Registry();
 
-        $builder = $this->prophesize(Builder::class)->reveal();
+        $factory = $this->prophesize(Factory::class)->reveal();
 
-        $registry->register(self::class, $builder);
+        $registry->register(self::class, $factory);
 
         $this->assertEquals(
-            $builder,
-            $registry->getBuilder($this)
+            $factory,
+            $registry->getFactory($this)
         );
     }
 }

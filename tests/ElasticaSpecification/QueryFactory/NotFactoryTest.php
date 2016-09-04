@@ -1,33 +1,33 @@
 <?php
 
-namespace Tests\GBProd\ElasticaSpecification;
+namespace ElasticaSpecification\QueryFactory;
 
 use Elastica\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
-use GBProd\ElasticaSpecification\ExpressionBuilder\NotBuilder;
-use GBProd\ElasticaSpecification\ExpressionBuilder\Builder;
+use GBProd\ElasticaSpecification\QueryFactory\NotFactory;
+use GBProd\ElasticaSpecification\QueryFactory\Factory;
 use GBProd\ElasticaSpecification\Registry;
 use GBProd\Specification\Not;
 use GBProd\Specification\Specification;
 
-class NotBuilderTest extends \PHPUnit_Framework_TestCase
+class NotFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstruct()
     {
-        $builder = new NotBuilder(new Registry());
+        $factory = new NotFactory(new Registry());
 
-        $this->assertInstanceOf(NotBuilder::class, $builder);
+        $this->assertInstanceOf(NotFactory::class, $factory);
     }
 
-    public function testBuildReturnsNotExpression()
+    public function testCreateReturnsNotQuery()
     {
         $not = $this->createNot();
         $registry = $this->createRegistry($not);
 
-        $builder = new NotBuilder($registry);
+        $factory = new NotFactory($registry);
 
-        $query = $builder->build($not, new QueryBuilder());
+        $query = $factory->create($not, new QueryBuilder());
 
         $this->assertInstanceOf(BoolQuery::class, $query);
 
@@ -53,29 +53,29 @@ class NotBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createRegistry($not)
     {
-        $builder = $this->createMock(Builder::class);
-        $builder
+        $factory = $this->createMock(Factory::class);
+        $factory
             ->expects($this->any())
-            ->method('build')
+            ->method('create')
             ->willReturn($this->createMock(AbstractQuery::class))
         ;
 
         $registry = new Registry();
 
-        $registry->register(get_class($not->getWrappedSpecification()), $builder);
+        $registry->register(get_class($not->getWrappedSpecification()), $factory);
 
         return $registry;
     }
 
 
-    public function testBuildThrowExceptionIfNotNotSpecification()
+    public function testCreateThrowExceptionIfNotNotSpecification()
     {
         $spec = $this->createMock(Specification::class);
         $registry = new Registry();
-        $builder = new NotBuilder($registry);
+        $factory = new NotFactory($registry);
 
         $this->expectException(\InvalidArgumentException::class);
 
-        $builder->build($spec, new QueryBuilder());
+        $factory->create($spec, new QueryBuilder());
     }
 }

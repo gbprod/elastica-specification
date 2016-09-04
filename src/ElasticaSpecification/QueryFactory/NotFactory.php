@@ -1,6 +1,6 @@
 <?php
 
-namespace GBProd\ElasticaSpecification\ExpressionBuilder;
+namespace GBProd\ElasticaSpecification\QueryFactory;
 
 use Elastica\QueryBuilder;
 use GBProd\ElasticaSpecification\Registry;
@@ -8,11 +8,11 @@ use GBProd\Specification\Not;
 use GBProd\Specification\Specification;
 
 /**
- * Expression Builder for Not specification
+ * Factory for Not specification
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class NotBuilder implements Builder
+class NotFactory implements Factory
 {
     /**
      * @var Registry
@@ -30,16 +30,16 @@ class NotBuilder implements Builder
     /**
      * {inheritdoc}
      */
-    public function build(Specification $spec, QueryBuilder $qb)
+    public function create(Specification $spec, QueryBuilder $qb)
     {
         if (!$spec instanceof Not) {
             throw new \InvalidArgumentException();
         }
 
-        $firstPartBuilder = $this->registry->getBuilder($spec->getWrappedSpecification());
+        $firstPartFactory = $this->registry->getFactory($spec->getWrappedSpecification());
 
         return $qb->query()->bool()
-            ->addMustNot($firstPartBuilder->build($spec->getWrappedSpecification(), $qb))
+            ->addMustNot($firstPartFactory->create($spec->getWrappedSpecification(), $qb))
         ;
     }
 }

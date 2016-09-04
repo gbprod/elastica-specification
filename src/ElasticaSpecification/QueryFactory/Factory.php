@@ -1,25 +1,25 @@
 <?php
 
-namespace GBProd\ElasticaSpecification\ExpressionBuilder;
+namespace GBProd\ElasticaSpecification\QueryFactory;
 
 use GBProd\Specification\Specification;
 use Elastica\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 
 /**
- * Interface for Elastica Expression Builders
+ * Interface for Elastica query factory
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-interface Builder
+interface Factory
 {
     /**
-     * Build expression for specification
+     * Create query for specification
      *
      * @param Specification $spec
      * @param QueryBuilder  $qb
      *
      * @return AbstractQuery
      */
-    public function build(Specification $spec, QueryBuilder $qb);
+    public function create(Specification $spec, QueryBuilder $qb);
 }

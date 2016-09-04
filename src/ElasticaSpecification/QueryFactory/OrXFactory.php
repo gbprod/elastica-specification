@@ -1,6 +1,6 @@
 <?php
 
-namespace GBProd\ElasticaSpecification\ExpressionBuilder;
+namespace GBProd\ElasticaSpecification\QueryFactory;
 
 use Elastica\QueryBuilder;
 use GBProd\ElasticaSpecification\Registry;
@@ -8,11 +8,11 @@ use GBProd\Specification\OrX;
 use GBProd\Specification\Specification;
 
 /**
- * Expression Builder for OrX specification
+ * Factory for OrX specification
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class OrXBuilder implements Builder
+class OrXFactory implements Factory
 {
     /**
      * @var Registry
@@ -30,18 +30,18 @@ class OrXBuilder implements Builder
     /**
      * {inheritdoc}
      */
-    public function build(Specification $spec, QueryBuilder $qb)
+    public function create(Specification $spec, QueryBuilder $qb)
     {
         if (!$spec instanceof OrX) {
             throw new \InvalidArgumentException();
         }
 
-        $firstPartBuilder  = $this->registry->getBuilder($spec->getFirstPart());
-        $secondPartBuilder = $this->registry->getBuilder($spec->getFirstPart());
+        $firstPartFactory  = $this->registry->getFactory($spec->getFirstPart());
+        $secondPartFactory = $this->registry->getFactory($spec->getFirstPart());
 
         return $qb->query()->bool()
-            ->addShould($firstPartBuilder->build($spec->getFirstPart(), $qb))
-            ->addShould($secondPartBuilder->build($spec->getSecondPart(), $qb))
+            ->addShould($firstPartFactory->create($spec->getFirstPart(), $qb))
+            ->addShould($secondPartFactory->create($spec->getSecondPart(), $qb))
         ;
     }
 }
