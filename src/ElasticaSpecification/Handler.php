@@ -3,6 +3,7 @@
 namespace GBProd\ElasticaSpecification;
 
 use Elastica\QueryBuilder;
+use Elastica\Query\AbstractQuery;
 use GBProd\ElasticaSpecification\ExpressionBuilder\AndXBuilder;
 use GBProd\ElasticaSpecification\ExpressionBuilder\Builder;
 use GBProd\ElasticaSpecification\ExpressionBuilder\NotBuilder;
@@ -42,7 +43,7 @@ class Handler
      * @param Specification $spec
      * @param QueryBuilder  $qb
      *
-     * @return array
+     * @return AbstractQuery
      */
     public function handle(Specification $spec, QueryBuilder $qb)
     {
