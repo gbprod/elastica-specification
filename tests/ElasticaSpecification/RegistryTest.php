@@ -29,7 +29,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase implements Specification
     {
         $registry = new Registry();
 
-        $this->setExpectedException(\OutOfRangeException::class);
+        $this->expectException(\OutOfRangeException::class);
 
         $registry->getBuilder($this);
     }

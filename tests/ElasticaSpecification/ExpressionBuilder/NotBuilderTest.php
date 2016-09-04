@@ -76,6 +76,6 @@ class NotBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        $expr = $builder->build($spec, new QueryBuilder());
+        $builder->build($spec, new QueryBuilder());
     }
 }
