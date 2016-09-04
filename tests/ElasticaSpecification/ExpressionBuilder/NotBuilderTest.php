@@ -74,7 +74,7 @@ class NotBuilderTest extends \PHPUnit_Framework_TestCase
         $registry = new Registry();
         $builder = new NotBuilder($registry);
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $expr = $builder->build($spec, new QueryBuilder());
     }
