@@ -29,9 +29,9 @@ class IsAvailableBuilder implements Builder
 {
     public function build(Specification $spec, QueryBuilder $qb)
     {
-        return $qb->filter()->bool()
+        return $qb->query()->bool()
             ->addMust(
-                $qb->filter()->term(['available' => "0"]),
+                $qb->query()->term(['available' => "0"]),
             )
         ;
     }
