@@ -36,7 +36,7 @@ class NotBuilder implements Builder
             throw new \InvalidArgumentException();
         }
 
-        $firstPartBuilder  = $this->registry->getBuilder($spec->getWrappedSpecification());
+        $firstPartBuilder = $this->registry->getBuilder($spec->getWrappedSpecification());
 
         return $qb->query()->bool()
             ->addMustNot($firstPartBuilder->build($spec->getWrappedSpecification(), $qb))
