@@ -5,7 +5,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gbprod/elastica-specification/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gbprod/elastica-specification/?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/574a9bc8ce8d0e004130d330/badge.svg)](https://www.versioneye.com/user/projects/574a9bc8ce8d0e004130d330)
 
-[![Latest Stable Version](https://poser.pugx.org/gbprod/elastica-specification/v/stable)](https://packagist.org/packages/gbprod/elastica-specification)
+[![Latest Stable Version](https://poser.pugx.org/gbprod/elastica-specification/version)](https://packagist.org/packages/gbprod/elastica-specification)
 [![Total Downloads](https://poser.pugx.org/gbprod/elastica-specification/downloads)](https://packagist.org/packages/gbprod/elastica-specification)
 [![Latest Unstable Version](https://poser.pugx.org/gbprod/elastica-specification/v/unstable)](https://packagist.org/packages/gbprod/elastica-specification)
 [![License](https://poser.pugx.org/gbprod/elastica-specification/license)](https://packagist.org/packages/gbprod/elastica-specification)
@@ -73,7 +73,7 @@ $results = $type->search($query);
 
 ## Requirements
 
- * PHP 5.5+
+ * PHP 5.6+
 
 ## Installation
 
