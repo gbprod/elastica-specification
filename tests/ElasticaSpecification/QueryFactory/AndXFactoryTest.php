@@ -5,29 +5,29 @@ namespace Tests\GBProd\ElasticaSpecification;
 use Elastica\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
-use GBProd\ElasticaSpecification\ExpressionBuilder\AndXBuilder;
-use GBProd\ElasticaSpecification\ExpressionBuilder\Builder;
+use GBProd\ElasticaSpecification\QueryFactory\AndXFactory;
+use GBProd\ElasticaSpecification\QueryFactory\Factory;
 use GBProd\ElasticaSpecification\Registry;
 use GBProd\Specification\AndX;
 use GBProd\Specification\Specification;
 
-class AndXBuilderTest extends \PHPUnit_Framework_TestCase
+class AndXFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstruct()
     {
-        $builder = new AndXBuilder(new Registry());
+        $factory = new AndXFactory(new Registry());
 
-        $this->assertInstanceOf(AndXBuilder::class, $builder);
+        $this->assertInstanceOf(AndXFactory::class, $factory);
     }
 
-    public function testBuildReturnsAndxExpression()
+    public function testCreateReturnsAndxQuery()
     {
         $andx = $this->createAndX();
         $registry = $this->createRegistry($andx);
 
-        $builder = new AndXBuilder($registry);
+        $factory = new AndXFactory($registry);
 
-        $query = $builder->build($andx, new QueryBuilder());
+        $query = $factory->create($andx, new QueryBuilder());
 
         $this->assertInstanceOf(BoolQuery::class, $query);
 
@@ -54,30 +54,30 @@ class AndXBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createRegistry($andx)
     {
-        $builder = $this->createMock(Builder::class);
-        $builder
+        $factory = $this->createMock(Factory::class);
+        $factory
             ->expects($this->any())
-            ->method('build')
+            ->method('create')
             ->willReturn($this->createMock(AbstractQuery::class))
         ;
 
         $registry = new Registry();
 
-        $registry->register(get_class($andx->getFirstPart()), $builder);
-        $registry->register(get_class($andx->getSecondPart()), $builder);
+        $registry->register(get_class($andx->getFirstPart()), $factory);
+        $registry->register(get_class($andx->getSecondPart()), $factory);
 
         return $registry;
     }
 
 
-    public function testBuildThrowExceptionIfNotAndXSpecification()
+    public function testCreateThrowExceptionIfNotAndXSpecification()
     {
         $spec = $this->createMock(Specification::class);
         $registry = new Registry();
-        $builder = new AndXBuilder($registry);
+        $factory = new AndXFactory($registry);
 
         $this->expectException(\InvalidArgumentException::class);
 
-        $builder->build($spec, new QueryBuilder());
+        $factory->create($spec, new QueryBuilder());
     }
 }

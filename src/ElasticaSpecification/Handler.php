@@ -4,10 +4,10 @@ namespace GBProd\ElasticaSpecification;
 
 use Elastica\QueryBuilder;
 use Elastica\Query\AbstractQuery;
-use GBProd\ElasticaSpecification\ExpressionBuilder\AndXBuilder;
-use GBProd\ElasticaSpecification\ExpressionBuilder\Builder;
-use GBProd\ElasticaSpecification\ExpressionBuilder\NotBuilder;
-use GBProd\ElasticaSpecification\ExpressionBuilder\OrXBuilder;
+use GBProd\ElasticaSpecification\QueryFactory\AndXFactory;
+use GBProd\ElasticaSpecification\QueryFactory\Factory;
+use GBProd\ElasticaSpecification\QueryFactory\NotFactory;
+use GBProd\ElasticaSpecification\QueryFactory\OrXFactory;
 use GBProd\Specification\AndX;
 use GBProd\Specification\Not;
 use GBProd\Specification\OrX;
@@ -32,9 +32,9 @@ class Handler
     {
         $this->registry = $registry;
 
-        $this->registry->register(AndX::class, new AndXBuilder($registry));
-        $this->registry->register(OrX::class, new OrXBuilder($registry));
-        $this->registry->register(Not::class, new NotBuilder($registry));
+        $this->registry->register(AndX::class, new AndXFactory($registry));
+        $this->registry->register(OrX::class, new OrXFactory($registry));
+        $this->registry->register(Not::class, new NotFactory($registry));
     }
 
     /**
@@ -47,19 +47,19 @@ class Handler
      */
     public function handle(Specification $spec, QueryBuilder $qb)
     {
-        $builder = $this->registry->getBuilder($spec);
+        $factory = $this->registry->getFactory($spec);
 
-        return $builder->build($spec, $qb);
+        return $factory->create($spec, $qb);
     }
 
     /**
-     * Register a builder for specification
+     * Register a factory for specification
      *
      * @param string  $classname specification fully qualified classname
-     * @param Builder $builder
+     * @param Factory $factory
      */
-    public function registerBuilder($classname, Builder $builder)
+    public function registerFactory($classname, Factory $factory)
     {
-        $this->registry->register($classname, $builder);
+        $this->registry->register($classname, $factory);
     }
 }

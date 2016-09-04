@@ -19,15 +19,15 @@ You can write specifications using [gbprod/specification](https://github.com/gbp
 ### Creates a elastica specification filter
 
 ```php
-namespace GBProd\Acme\Elastica\SpecificationBuilder;
+namespace GBProd\Acme\Elastica\SpecificationFactory;
 
-use GBProd\ElasticaSpecification\ExpressionBuilder\Builder;
+use GBProd\ElasticaSpecification\QueryFactory\Factory;
 use GBProd\Specification\Specification;
 use Elastica\QueryBuilder;
 
-class IsAvailableBuilder implements Builder
+class IsAvailableFactory implements Factory
 {
-    public function build(Specification $spec, QueryBuilder $qb)
+    public function create(Specification $spec, QueryBuilder $qb)
     {
         return $qb->query()->bool()
             ->addMust(
@@ -44,8 +44,8 @@ class IsAvailableBuilder implements Builder
 $registry = new GBProd\ElasticaSpecification\Registry();
 
 $handler = new GBProd\ElasticaSpecification\Handler($registry);
-$handler->registerBuilder(IsAvailable::class, new IsAvailableBuilder());
-$handler->registerBuilder(StockGreaterThan::class, new StockGreaterThanBuilder());
+$handler->registerFactory(IsAvailable::class, new IsAvailableFactory());
+$handler->registerFactory(StockGreaterThan::class, new StockGreaterThanFactory());
 ```
 
 ### Use it

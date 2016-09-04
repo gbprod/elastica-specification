@@ -1,33 +1,33 @@
 <?php
 
-namespace Tests\GBProd\ElasticaSpecification;
+namespace ElasticaSpecification\QueryFactory;
 
 use Elastica\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
-use GBProd\ElasticaSpecification\ExpressionBuilder\OrXBuilder;
-use GBProd\ElasticaSpecification\ExpressionBuilder\Builder;
+use GBProd\ElasticaSpecification\QueryFactory\OrXFactory;
+use GBProd\ElasticaSpecification\QueryFactory\Factory;
 use GBProd\ElasticaSpecification\Registry;
 use GBProd\Specification\OrX;
 use GBProd\Specification\Specification;
 
-class OrXBuilderTest extends \PHPUnit_Framework_TestCase
+class OrXFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstruct()
     {
-        $builder = new OrXBuilder(new Registry());
+        $factory = new OrXFactory(new Registry());
 
-        $this->assertInstanceOf(OrXBuilder::class, $builder);
+        $this->assertInstanceOf(OrXFactory::class, $factory);
     }
 
-    public function testBuildReturnsOrxExpression()
+    public function testCreateReturnsOrxQuery()
     {
         $orx = $this->createOrX();
         $registry = $this->createRegistry($orx);
 
-        $builder = new OrXBuilder($registry);
+        $factory = new OrXFactory($registry);
 
-        $query = $builder->build($orx, new QueryBuilder());
+        $query = $factory->create($orx, new QueryBuilder());
 
         $this->assertInstanceOf(BoolQuery::class, $query);
 
@@ -54,30 +54,30 @@ class OrXBuilderTest extends \PHPUnit_Framework_TestCase
      */
     private function createRegistry($orx)
     {
-        $builder = $this->createMock(Builder::class);
-        $builder
+        $factory = $this->createMock(Factory::class);
+        $factory
             ->expects($this->any())
-            ->method('build')
+            ->method('create')
             ->willReturn($this->createMock(AbstractQuery::class))
         ;
 
         $registry = new Registry();
 
-        $registry->register(get_class($orx->getFirstPart()), $builder);
-        $registry->register(get_class($orx->getSecondPart()), $builder);
+        $registry->register(get_class($orx->getFirstPart()), $factory);
+        $registry->register(get_class($orx->getSecondPart()), $factory);
 
         return $registry;
     }
 
 
-    public function testBuildThrowExceptionIfNotOrXSpecification()
+    public function testCreateThrowExceptionIfNotOrXSpecification()
     {
         $spec = $this->createMock(Specification::class);
         $registry = new Registry();
-        $builder = new OrXBuilder($registry);
+        $factory = new OrXFactory($registry);
 
         $this->expectException(\InvalidArgumentException::class);
 
-        $builder->build($spec, new QueryBuilder());
+        $factory->create($spec, new QueryBuilder());
     }
 }
