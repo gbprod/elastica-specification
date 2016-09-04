@@ -1,5 +1,5 @@
 {
-    "name": "gilles/elastica-specification",
+    "name": "gbprod/elastica-specification",
     "description": "This library allows you to create Elastica queries using the Specification pattern",
     "type": "library",
     "require": {
