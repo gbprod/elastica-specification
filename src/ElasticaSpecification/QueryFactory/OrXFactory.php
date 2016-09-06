@@ -37,7 +37,7 @@ class OrXFactory implements Factory
         }
 
         $firstPartFactory  = $this->registry->getFactory($spec->getFirstPart());
-        $secondPartFactory = $this->registry->getFactory($spec->getFirstPart());
+        $secondPartFactory = $this->registry->getFactory($spec->getSecondPart());
 
         return $qb->query()->bool()
             ->addShould($firstPartFactory->create($spec->getFirstPart(), $qb))

@@ -37,7 +37,7 @@ class AndXFactory implements Factory
         }
 
         $firstPartFactory  = $this->registry->getFactory($spec->getFirstPart());
-        $secondPartFactory = $this->registry->getFactory($spec->getFirstPart());
+        $secondPartFactory = $this->registry->getFactory($spec->getSecondPart());
 
         return $qb->query()->bool()
             ->addMust($firstPartFactory->create($spec->getFirstPart(), $qb))
