@@ -26,10 +26,17 @@ class Handler
     private $registry;
 
     /**
-     * @param Registry $registry
+     * @param QueryBuilder
      */
-    public function __construct(Registry $registry)
+    private $qb;
+
+    /**
+     * @param Registry     $registry
+     * @param QueryBuilder $qb
+     */
+    public function __construct(Registry $registry, QueryBuilder $qb)
     {
+        $this->qb = $qb;
         $this->registry = $registry;
 
         $this->registry->register(AndX::class, new AndXFactory($registry));
@@ -41,15 +48,14 @@ class Handler
      * handle specification for querybuilder
      *
      * @param Specification $spec
-     * @param QueryBuilder  $qb
      *
      * @return AbstractQuery
      */
-    public function handle(Specification $spec, QueryBuilder $qb)
+    public function handle(Specification $spec)
     {
         $factory = $this->registry->getFactory($spec);
 
-        return $factory->create($spec, $qb);
+        return $factory->create($spec, $this->qb);
     }
 
     /**
