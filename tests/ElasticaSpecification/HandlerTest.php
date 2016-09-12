@@ -23,6 +23,11 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
     private $registry;
 
     /**
+     * @var QueryBuilder
+     */
+    private $qb;
+
+    /**
      * @var Handler
      */
     private $handler;
@@ -30,7 +35,8 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->registry = new Registry();
-        $this->handler = new Handler($this->registry);
+        $this->qb = new QueryBuilder();
+        $this->handler = new Handler($this->registry, $this->qb);
     }
 
     public function testConstructWillRegisterBaseFactoriess()
@@ -69,25 +75,22 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
-        $this->handler = new Handler(new Registry());
-
         $factory = $this->prophesize(Factory::class);
 
         $spec = $this->createMock(Specification::class);
         $this->handler->registerFactory(get_class($spec), $factory->reveal());
 
         $builtQuery = $this->getMockForAbstractClass(AbstractQuery::class);
-        $qb = new QueryBuilder();
 
         $factory
-            ->create($spec, $qb)
+            ->create($spec, $this->qb)
             ->willReturn($builtQuery)
             ->shouldBeCalled()
         ;
 
         $this->assertEquals(
             $builtQuery,
-            $this->handler->handle($spec, $qb)
+            $this->handler->handle($spec)
         );
     }
 }

@@ -42,8 +42,9 @@ class IsAvailableFactory implements Factory
 
 ```php
 $registry = new GBProd\ElasticaSpecification\Registry();
+$qb = new \Elastica\QueryBuilder();
 
-$handler = new GBProd\ElasticaSpecification\Handler($registry);
+$handler = new GBProd\ElasticaSpecification\Handler($registry, $qb);
 $handler->registerFactory(IsAvailable::class, new IsAvailableFactory());
 $handler->registerFactory(StockGreaterThan::class, new StockGreaterThanFactory());
 ```
@@ -64,9 +65,8 @@ $type = $this->elasticaClient
     ->getIndex('my_index')
     ->getType('my_type')
 ;
-$qb = new \Elastica\QueryBuilder();
 
-$query = $handler->handle($availableWithLowStock, $qb)
+$query = $handler->handle($availableWithLowStock)
 
 $results = $type->search($query);
 ```
