@@ -2,13 +2,20 @@ language: php
 php:
   - '5.6'
   - '7.0'
+  - '7.1'
+
+
+env:
+    - ELASTICA_VERSION=3.2.*
+    - ELASTICA_VERSION=5.0.*
 
 before_script:
     - composer self-update
-    - composer install --no-interaction
+    - composer require ruflin/elastica:${ELASTICA_VERSION} --no-update
+    - composer update
 
 script:
-    - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+    - vendor/bin/phpunit --coverage-clover=coverage.clover
 
 after_success:
     - wget https://scrutinizer-ci.com/ocular.phar
