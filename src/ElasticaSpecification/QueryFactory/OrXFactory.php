@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+
 namespace GBProd\ElasticaSpecification\QueryFactory;
 
 use Elastica\QueryBuilder;

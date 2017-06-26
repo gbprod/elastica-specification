@@ -5,13 +5,14 @@ namespace ElasticaSpecification\QueryFactory;
 use Elastica\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
-use GBProd\ElasticaSpecification\QueryFactory\NotFactory;
 use GBProd\ElasticaSpecification\QueryFactory\Factory;
+use GBProd\ElasticaSpecification\QueryFactory\NotFactory;
 use GBProd\ElasticaSpecification\Registry;
 use GBProd\Specification\Not;
 use GBProd\Specification\Specification;
+use PHPUnit\Framework\TestCase;
 
-class NotFactoryTest extends \PHPUnit_Framework_TestCase
+class NotFactoryTest extends TestCase
 {
     public function testConstruct()
     {

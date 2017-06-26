@@ -5,13 +5,14 @@ namespace ElasticaSpecification\QueryFactory;
 use Elastica\QueryBuilder;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
-use GBProd\ElasticaSpecification\QueryFactory\OrXFactory;
 use GBProd\ElasticaSpecification\QueryFactory\Factory;
+use GBProd\ElasticaSpecification\QueryFactory\OrXFactory;
 use GBProd\ElasticaSpecification\Registry;
 use GBProd\Specification\OrX;
 use GBProd\Specification\Specification;
+use PHPUnit\Framework\TestCase;
 
-class OrXFactoryTest extends \PHPUnit_Framework_TestCase
+class OrXFactoryTest extends TestCase
 {
     public function testConstruct()
     {

@@ -10,8 +10,9 @@ use GBProd\ElasticaSpecification\QueryFactory\Factory;
 use GBProd\ElasticaSpecification\Registry;
 use GBProd\Specification\AndX;
 use GBProd\Specification\Specification;
+use PHPUnit\Framework\TestCase;
 
-class AndXFactoryTest extends \PHPUnit_Framework_TestCase
+class AndXFactoryTest extends TestCase
 {
     public function testConstruct()
     {
