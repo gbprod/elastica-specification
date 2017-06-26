@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GBProd\ElasticaSpecification\QueryFactory;
 
-use GBProd\Specification\Specification;
 use Elastica\QueryBuilder;
 use Elastica\Query\AbstractQuery;
+use GBProd\Specification\Specification;
 
 /**
  * Interface for Elastica query factory

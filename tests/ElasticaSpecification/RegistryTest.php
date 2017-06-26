@@ -5,13 +5,14 @@ namespace Tests\GBProd\ElasticaSpecification;
 use GBProd\ElasticaSpecification\QueryFactory\Factory;
 use GBProd\ElasticaSpecification\Registry;
 use GBProd\Specification\Specification;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for registry
  *
  * @author gbprod <contact@gb-prod.fr>
  */
-class RegistryTest extends \PHPUnit_Framework_TestCase implements Specification
+class RegistryTest extends TestCase implements Specification
 {
     public function testConstruct()
     {
@@ -20,7 +21,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase implements Specification
         $this->assertInstanceOf(Registry::class, $registry);
     }
 
-    public function isSatisfiedBy($candidate)
+    public function isSatisfiedBy($candidate): bool
     {
         return true;
     }

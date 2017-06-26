@@ -4,18 +4,19 @@ namespace Tests\GBProd\ElasticaSpecification;
 
 use Elastica\QueryBuilder;
 use Elastica\Query\AbstractQuery;
+use GBProd\ElasticaSpecification\Handler;
 use GBProd\ElasticaSpecification\QueryFactory\AndXFactory;
 use GBProd\ElasticaSpecification\QueryFactory\Factory;
 use GBProd\ElasticaSpecification\QueryFactory\NotFactory;
 use GBProd\ElasticaSpecification\QueryFactory\OrXFactory;
-use GBProd\ElasticaSpecification\Handler;
 use GBProd\ElasticaSpecification\Registry;
 use GBProd\Specification\AndX;
 use GBProd\Specification\Not;
 use GBProd\Specification\OrX;
 use GBProd\Specification\Specification;
+use PHPUnit\Framework\TestCase;
 
-class HandlerTest extends \PHPUnit_Framework_TestCase
+class HandlerTest extends TestCase
 {
     /**
      * @var Registry
