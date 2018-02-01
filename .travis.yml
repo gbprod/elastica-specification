@@ -2,11 +2,11 @@ language: php
 php:
   - '7.0'
   - '7.1'
+  - '7.2'
 
 env:
-    - ELASTICA_VERSION=5.0.*
-    - ELASTICA_VERSION=5.1.*
-    - ELASTICA_VERSION=5.2.*
+    - ELASTICA_VERSION=^5.0
+    - ELASTICA_VERSION=^6.0
 
 before_script:
     - composer self-update
