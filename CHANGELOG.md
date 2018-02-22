@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/gbprod/elastica-specification/compare/v2.1.0...HEAD)
 
+ - Changing licence
+
 ## [v2.1.0](https://github.com/gbprod/elastica-specification/compare/v2.0.0...v2.1.0)
 
 - Add support for Elastica 6 and php 7.2
